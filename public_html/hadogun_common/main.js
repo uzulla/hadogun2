@@ -134,7 +134,7 @@ $(function(){
                         data.tweet.profile_image_url,
                         data.tweet.text,
                         '1999-12-31',
-                        'https://twitter.com/uzulla/status/511037414563774464'
+                        'https://twitter.com/'+data.tweet.screen_name+'/status/'+data.tweet.id_str
                     )
                 );
             });
