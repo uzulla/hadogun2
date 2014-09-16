@@ -81,6 +81,8 @@ var tweet_feeder = {
         Mustache.parse(this.tweet_template);
     },
     addTweet : function(tweet){
+        // 一件表示に
+        this.$tweet_list.empty();
         //return;
         var tweet_elm_str = Mustache.render(this.tweet_template, tweet);
         var tweet_elm = $(tweet_elm_str);
@@ -104,13 +106,12 @@ var tweet_feeder = {
         this.$lspk.transition({ scale: 1.01 },0);
         this.$lspk.transition({ scale: 1 },10);
 
-
         // 無駄に多くなるので消し込み
         // Vueつかいたいけど、仕変を考えると…
-        var tweet_elm_list = this.$tweet_list.children('li');
-        if(tweet_elm_list.length>20){
-            $(tweet_elm_list.get(tweet_elm_list.length-1)).remove();
-        }
+        //var tweet_elm_list = this.$tweet_list.children('li');
+        //if(tweet_elm_list.length>20){
+        //    $(tweet_elm_list.get(tweet_elm_list.length-1)).remove();
+        //}
     },
     reset : function(){
     }

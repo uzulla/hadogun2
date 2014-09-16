@@ -1,12 +1,12 @@
 #tweet-list{
     width: 430px;
     height: 500px;
-    background-color: #111111;
+    background-color: transparent;
     list-style-type: none;
     padding:0px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
     margin:0px;
+    margin-top:45px;
 }
 
 #tweet-list li{
