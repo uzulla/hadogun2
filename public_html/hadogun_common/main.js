@@ -2,6 +2,7 @@
 var HadogunEffectFadeIn = 2000;
 var HadogunEffectFadeOut = 2000;
 var HadogunEffectTimeout = 5000;
+var HadogunServerHostName = "hadoch.cfe.jp:8080";
 
 var hadogunEffect = {
     template : null,
@@ -99,7 +100,7 @@ $(function(){
     tweet_feeder.init();
     hadogunEffect.init();
 
-    var conn = new ab.Session('ws://localhost:8080',
+    var conn = new ab.Session('ws://'+HadogunServerHostName,
         function() {
             conn.subscribe('hadoch', function(topic, data) {
                 if(data.type=='hadogun_fire'){
