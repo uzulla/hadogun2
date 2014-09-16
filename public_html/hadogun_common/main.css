@@ -46,3 +46,16 @@
     margin-left:50px;
 }
 
+#hadogun_client{
+    width:710px;
+    height:100px;
+    overflow: hidden;
+    background-image: url(img/background.jpg);
+}
+
+#lspk{
+    position: absolute
+}
+#sspk{
+    position: absolute
+}
