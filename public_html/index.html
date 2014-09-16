@@ -11,6 +11,7 @@
     <script src="hadogun_common/jquery.blockUI.min.js"></script>
     <script src="hadogun_common/maxim.js"></script>
     <script src="hadogun_common/main.js"></script>
+    <script src="hadogun_common/jquery.transit.min.js"></script>
     <link rel="stylesheet" href="hadogun_common/main.css">
     <script id="template" type="x-tmpl-mustache">
     <li>
@@ -27,13 +28,19 @@
 </head>
 <body>
 
-<ul id="tweet-list">
-    <li>
-        <img src="https://pbs.twimg.com/profile_images/378800000122330373/c9162e04e2a5fb779758cc4f0a13c2c0_400x400.jpeg" >
-        <div class="screen_name">uzulla</div>
-        <div class="text">テキストテキストテキスト</div>
-    </li>
-</ul>
+<div style="width:710px; height:100px; overflow: hidden; background-image: url(hadogun_common/img/background.jpg);">
+    <img src="hadogun_common/img/lspk.png" id="lspk" style="position: absolute">
+    <img src="hadogun_common/img/sspk.png" id="sspk" style="position: absolute">
+    <ul id="tweet-list" style="margin-left:140px;">
+        <li>
+            <img src="https://pbs.twimg.com/profile_images/378800000122330373/c9162e04e2a5fb779758cc4f0a13c2c0_400x400.jpeg" >
+            <div class="screen_name">uzulla</div>
+            <div class="text">テキストテキストテキスト</div>
+        </li>
+    </ul>
+
+</div>
+
 
 <iframe width="480" height="299" src="http://www.ustream.tv/embed/16395211?v=3&amp;wmode=direct" scrolling="no" frameborder="0" style="border: 0px none transparent;">    </iframe>
 <br /><a href="http://www.ustream.tv" style="font-size: 12px; line-height: 20px; font-weight: normal; text-align: left;" target="_blank">Broadcast live streaming video on Ustream</a>

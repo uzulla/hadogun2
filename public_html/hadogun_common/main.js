@@ -66,11 +66,16 @@ var tweet = {
 
 var tweet_feeder = {
     $tweet_list : null,
+    $sspk : null,
+    $lspk : null,
     tweet_template: null,
 
     init : function(){
         // 毎回探さないように
         this.$tweet_list = $("#tweet-list");
+        this.$sspk = $("#sspk");
+        this.$lspk = $("#lspk");
+
         // TweetテンプレートのPrepare
         this.tweet_template = $('#template').html();
         Mustache.parse(this.tweet_template);
@@ -80,15 +85,30 @@ var tweet_feeder = {
         var tweet_elm_str = Mustache.render(this.tweet_template, tweet);
         var tweet_elm = $(tweet_elm_str);
 
-        // スライドしながら表示させたいぞい
-        tweet_elm.hide();
+        // スライドしながら表示させたいぞい (重い…
+        //tweet_elm.hide();
+        $(tweet_elm).transition({ scale: 3, opacity: 0 },0);
+
         this.$tweet_list.prepend(tweet_elm);
-        tweet_elm.slideDown();
+        //tweet_elm.slideDown();
+        $(tweet_elm).transition({ scale: 1, opacity: 1  },200);
+        //$(tweet_elm).transition({
+        //    perspective: '1000px',
+        //    rotateX: '360deg'
+        //});
+
+        // spk
+        this.$sspk.transition({ scale: 0.995 },0);
+        this.$sspk.transition({ scale: 1 },10);
+
+        this.$lspk.transition({ scale: 1.01 },0);
+        this.$lspk.transition({ scale: 1 },10);
+
 
         // 無駄に多くなるので消し込み
         // Vueつかいたいけど、仕変を考えると…
         var tweet_elm_list = this.$tweet_list.children('li');
-        if(tweet_elm_list.length>100){
+        if(tweet_elm_list.length>20){
             $(tweet_elm_list.get(tweet_elm_list.length-1)).remove();
         }
     },

@@ -1,17 +1,20 @@
 #tweet-list{
-    width: 510px;
+    width: 430px;
     height: 500px;
-    background-color: gray;
+    background-color: #111111;
     list-style-type: none;
     padding:0px;
     overflow-x: hidden;
     overflow-y: scroll;
+    margin:0px;
 }
 
 #tweet-list li{
-    width: 500px;
+    width: 420px;
     border-bottom: 1px solid black;
-    background-color: white;
+    background-color: transparent;
+    font-size: 10pt;
+    color: #EEEEEE;
 }
 
 #tweet-list li:after{
@@ -36,3 +39,4 @@
 #tweet-list .text{
     margin-left:50px;
 }
+
