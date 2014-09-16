@@ -1,0 +1,10 @@
+{
+    "require": {
+        "fennb/phirehose": "dev-master",
+        "cboden/ratchet": "*",
+        "react/zmq": "*"
+    },
+    "autoload": {
+        "psr-0": {"": "lib/"}
+    }
+}
