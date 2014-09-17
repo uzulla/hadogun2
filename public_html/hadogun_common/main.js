@@ -1,3 +1,5 @@
+if(typeof console != 'object'){ var console = {'log': function(){}}; } // hehe
+
 // config
 var HadogunEffectFadeIn = 2000;
 var HadogunEffectFadeOut = 2000;
@@ -117,13 +119,17 @@ var tweet_feeder = {
     }
 };
 
-$(function(){
-    tweet_feeder.init();
-    hadogunEffect.init();
-
-    var conn = new ab.Session('ws://'+HadogunServerHostName,
+var connection = {
+    conn: null,
+    reconnectWait: 5000,
+    init: function() {
+        console.log('Init connection.');
+        connection.createSession();
+    },
+    onOpen:
         function() {
-            conn.subscribe('hadoch', function(topic, data) {
+            console.log('connection success.');
+            connection.conn.subscribe('hadoch', function(topic, data) {
                 if(data.type=='hadogun_fire'){
                     console.log('fire!');
                     hadogunEffect.fire();
@@ -139,11 +145,34 @@ $(function(){
                     )
                 );
             });
-        },
-        function() {
-            //再接続を書くぞ
-            console.warn('WebSocket connection closed');
-        },
-        {'skipSubprotocolCheck': true}
-    );
+        }
+    ,
+    onClose:function(){
+        console.log('WebSocket connection closed');
+        connection.disposeSession();
+        //再接続
+        console.log('Retry setup.');
+        setTimeout(
+            connection.createSession,
+            connection.reconnectWait
+        );
+    },
+    createSession:function(){
+        console.log('Try connecting to server.');
+        connection.conn = new ab.Session(
+            'ws://'+HadogunServerHostName,
+            connection.onOpen,
+            connection.onClose,
+            {'skipSubprotocolCheck': true}
+        );
+    },
+    disposeSession:function(){
+        connection.conn = null;
+    }
+};
+
+$(function(){
+    tweet_feeder.init();
+    hadogunEffect.init();
+    connection.init();
 });
