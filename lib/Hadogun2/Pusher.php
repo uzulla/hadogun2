@@ -1,5 +1,6 @@
 <?php
-namespace Publisher;
+
+namespace Hadogun2;
 
 use Ratchet\ConnectionInterface;
 use Ratchet\Wamp\WampServerInterface;

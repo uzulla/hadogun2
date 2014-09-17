@@ -3,7 +3,7 @@ require_once(__DIR__.'/vendor/autoload.php');
 require_once(__DIR__.'/config.php');
 
 $loop   = React\EventLoop\Factory::create();
-$pusher = new Publisher\Pusher;
+$pusher = new \Hadogun2\Pusher;
 
 $context = new React\ZMQ\Context($loop);
 $pull = $context->getSocket(ZMQ::SOCKET_PULL);

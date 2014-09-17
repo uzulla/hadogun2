@@ -1,8 +1,9 @@
 <?php
+namespace Hadogun2;
 
 use \Uzulla\SLog\SimpleLogger;
 
-class HadogunCollectorFilterTrackConsumer extends OauthPhirehose
+class Collector extends \OauthPhirehose
 {
     static $単位時間 = 10; // sec
     static $波動砲発射閾値 = 10; // tweet
@@ -11,13 +12,13 @@ class HadogunCollectorFilterTrackConsumer extends OauthPhirehose
     private $zmq;
     private $log;
 
-    public function __construct($username, $password, $method = Phirehose::METHOD_SAMPLE, $format = self::FORMAT_JSON, $lang = FALSE)
+    public function __construct($username, $password, $method = \Phirehose::METHOD_SAMPLE, $format = self::FORMAT_JSON, $lang = FALSE)
     {
         $this->前回の時刻 = microtime(true);
         echo 'start time' . $this->前回の時刻 . "\n";
 
         $context = new \ZMQContext();
-        $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'hadoch');
+        $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, 'hadoch');
         $socket->connect("tcp://localhost:5555");
         $this->zmq = $socket;
 
