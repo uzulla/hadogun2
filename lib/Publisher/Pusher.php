@@ -3,11 +3,18 @@ namespace Publisher;
 
 use Ratchet\ConnectionInterface;
 use Ratchet\Wamp\WampServerInterface;
+use Uzulla\SLog\SimpleLogger;
 
 class Pusher implements WampServerInterface
 {
 
     protected $subscribedTopics = [];
+    protected $count = 0;
+    private $log;
+
+    public function __construct(){
+        $this->log = $this->log = new SimpleLogger(SimpleLogger::DEBUG, BASE_PATH.'/push.log');
+    }
 
     private $debug_count = 0;
 
@@ -53,10 +60,14 @@ class Pusher implements WampServerInterface
 
     public function onOpen(ConnectionInterface $conn)
     {
+        $this->count++;
+        $this->log->debug("Conn num:{$this->count}");
     }
 
     public function onClose(ConnectionInterface $conn)
     {
+        $this->count--;
+        $this->log->debug("Conn num:{$this->count}");
     }
 
     public function onCall(ConnectionInterface $conn, $id, $topic, array $params)
