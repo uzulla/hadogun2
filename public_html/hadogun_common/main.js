@@ -16,7 +16,6 @@ var hadogunEffect = {
     fire : function(message){
         message = maxim.getRand();
 
-//        {"text":"凄い感じのテキストが", "author":"うずら"};
         var html = Mustache.render(this.template, message);
 
         $.blockUI({
@@ -60,7 +59,7 @@ var tweet = {
         this.name = screen_name;
         this.img_url = avatar_img_url;
         this.text = tweet_text;
-        this.date = moment(date_str);
+        this.date = date_str;
         this.url = tweet_url;
         return this;
     }
