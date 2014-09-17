@@ -1,4 +1,7 @@
 <?php
+ini_set("date.timezone", "Asia/Tokyo");
+define("BASE_PATH", __DIR__);
+
 define("TWITTER_CONSUMER_KEY", "");
 define("TWITTER_CONSUMER_SECRET", "");
 define("OAUTH_TOKEN", "");

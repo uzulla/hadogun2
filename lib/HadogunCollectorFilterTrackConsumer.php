@@ -1,5 +1,7 @@
 <?php
 
+use \Uzulla\SLog\SimpleLogger;
+
 class HadogunCollectorFilterTrackConsumer extends OauthPhirehose
 {
     static $単位時間 = 10; // sec
@@ -7,6 +9,7 @@ class HadogunCollectorFilterTrackConsumer extends OauthPhirehose
     private $前回の時刻 = 0; // microtime
     private $現在流量 = 0; // tweet
     private $zmq;
+    private $log;
 
     public function __construct($username, $password, $method = Phirehose::METHOD_SAMPLE, $format = self::FORMAT_JSON, $lang = FALSE)
     {
@@ -17,6 +20,8 @@ class HadogunCollectorFilterTrackConsumer extends OauthPhirehose
         $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'hadoch');
         $socket->connect("tcp://localhost:5555");
         $this->zmq = $socket;
+
+        $this->log = new SimpleLogger(SimpleLogger::DEBUG, BASE_PATH.'/track.log');
 
         parent::__construct($username, $password, $method, $format, $lang);
     }
@@ -49,10 +54,11 @@ class HadogunCollectorFilterTrackConsumer extends OauthPhirehose
         } else {
             // 判定
             if (static::$波動砲発射閾値 < $this->現在流量) {
-                echo "波動砲発射!:" . $this->現在流量 . "\n";
+                $this->log->info("波動砲発射:" . $this->現在流量);
+                echo "h";
                 $data['type'] = 'hadogun_fire';
             } else {
-                echo "現在流量:" . $this->現在流量 . "\n";
+                $this->log->info("現在流量:" . $this->現在流量);
                 $data['type'] = 'tweet';
             }
             $this->現在流量 = 0;
@@ -60,6 +66,10 @@ class HadogunCollectorFilterTrackConsumer extends OauthPhirehose
         }
 
         $this->zmq->send(json_encode($data));
+
+        // logging tweet
+        $this->log->debug("tweet: {$tweet['screen_name']}: {$tweet['id_str']} => ".
+            preg_replace("/[\r\n]/u", '', urldecode($tweet['text'])));
         echo ".";
     }
 }
