@@ -1,8 +1,8 @@
 <?php
 
-class FilterTrackConsumer extends OauthPhirehose
+class HadogunCollectorFilterTrackConsumer extends OauthPhirehose
 {
-    static $単位時間 = 3; // sec
+    static $単位時間 = 10; // sec
     static $波動砲発射閾値 = 10; // tweet
     private $前回の時刻 = 0; // microtime
     private $現在流量 = 0; // tweet
