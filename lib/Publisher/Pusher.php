@@ -22,12 +22,12 @@ class Pusher implements WampServerInterface
         //var_dump($data);
 
         // リデュース
-        $this->debug_count++;
-        if($this->debug_count%10!=0){
-            return;
-        }else{
-            $this->debug_count=0;
-        }
+//        $this->debug_count++;
+//        if($this->debug_count%10!=0){
+//            return;
+//        }else{
+//            $this->debug_count=0;
+//        }
 
         echo ".";
 
