@@ -120,7 +120,7 @@ var tweet_feeder = {
 
 var connection = {
     conn: null,
-    reconnectWait: 5000,
+    reconnectWait: 10000,
     init: function() {
         console.log('Init connection.');
         connection.createSession();
