@@ -2,3 +2,5 @@
 composer.phar
 .php-version
 config.php
+push.log
+track.log
