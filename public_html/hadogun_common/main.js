@@ -4,7 +4,7 @@ if(typeof console != 'object'){ var console = {'log': function(){}}; } // hehe
 var HadogunEffectFadeIn = 2000;
 var HadogunEffectFadeOut = 2000;
 var HadogunEffectTimeout = 5000;
-var HadogunServerHostName = "hadoch.cfe.jp:8080";
+var HadogunServerHostName = "localhost:8080";
 
 var hadogunEffect = {
     template : null,

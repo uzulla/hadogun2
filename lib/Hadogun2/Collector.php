@@ -5,17 +5,12 @@ use \Uzulla\SLog\SimpleLogger;
 
 class Collector extends \OauthPhirehose
 {
-    static $単位時間 = 10; // sec
-    static $波動砲発射閾値 = 10; // tweet
-    private $前回の時刻 = 0; // microtime
-    private $現在流量 = 0; // tweet
+
     private $zmq;
     private $log;
 
     public function __construct($username, $password, $method = \Phirehose::METHOD_SAMPLE, $format = self::FORMAT_JSON, $lang = FALSE)
     {
-        $this->前回の時刻 = microtime(true);
-        echo 'start time' . $this->前回の時刻 . "\n";
 
         $context = new \ZMQContext();
         $socket = $context->getSocket(\ZMQ::SOCKET_PUSH, 'hadoch');
@@ -34,43 +29,20 @@ class Collector extends \OauthPhirehose
             return; // invalid data?
         }
 
-        $今の時刻 = microtime(true);
-        $差分 = $今の時刻 - $this->前回の時刻;
-
-        $tweet = [
+        $data = ['tweet' => [
             'screen_name' => $data['user']['screen_name'],
             'profile_image_url' => $data['user']['profile_image_url'],
             'text' => urldecode($data['text']),
             'created_at' => $data['created_at'],
             'timestamp_ms' => $data['timestamp_ms'],
             'id_str' => $data['id_str'],
-        ];
-
-        $data = ['tweet' => $tweet];
-
-        if ($差分 < static::$単位時間) {
-            $this->現在流量++;
-            $data['type'] = 'tweet';
-
-        } else {
-            // 判定
-            if (static::$波動砲発射閾値 < $this->現在流量) {
-                $this->log->info("波動砲発射:" . $this->現在流量);
-                echo "h";
-                $data['type'] = 'hadogun_fire';
-            } else {
-                $this->log->info("現在流量:" . $this->現在流量);
-                $data['type'] = 'tweet';
-            }
-            $this->現在流量 = 0;
-            $this->前回の時刻 = $今の時刻;
-        }
+        ]];
 
         $this->zmq->send(json_encode($data));
 
         // logging tweet
-        $this->log->debug("tweet: {$tweet['screen_name']}: {$tweet['id_str']} => ".
-            preg_replace("/[\r\n]/u", '', urldecode($tweet['text'])));
+        $this->log->debug("tweet: {$data['tweet']['screen_name']}: {$data['tweet']['id_str']} => ".
+            preg_replace("/[\r\n]/u", '', urldecode($data['tweet']['text'])));
         echo ".";
     }
 }
